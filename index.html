@@ -980,6 +980,24 @@
       a.style.color = a.getAttribute('href') === '#' + current ? 'var(--navy)' : '';
     });
   });
+  async function submitForm(e) {
+    e.preventDefault();
+    const name = document.querySelector('input[type="text"]').value;
+    const email = document.querySelector('input[type="email"]').value;
+    const message = document.querySelector('textarea').value;
+    if (!name || !email || !message) { alert('Please fill all fields!'); return; }
+    const res = await fetch('https://formspree.io/f/xzdqpkwd', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ name, email, message })
+    });
+    if (res.ok) {
+      alert('Message sent! Tannu will get back to you soon 🙂');
+      document.querySelector('input[type="text"]').value = '';
+      document.querySelector('input[type="email"]').value = '';
+      document.querySelector('textarea').value = '';
+    } else { alert('Something went wrong. Please email directly!'); }
+  }
 </script>
 
 </body>
